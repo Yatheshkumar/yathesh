@@ -1,0 +1,47 @@
+package busReservation;
+import java.util.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+public class Booking {
+	String Passengername;
+	int busno;
+	Date date;
+	
+	Booking(){
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter your name");
+		Passengername = sc.next();
+		System.out.println("busno");
+		busno = sc.nextInt();
+		System.out.println("dd-mm-yyyy");
+		String dateinput = sc.next();
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+	    
+	    try {
+			date = dateFormat.parse(dateinput);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	public boolean isAvailable(ArrayList<Booking> bookings ,ArrayList<Bus> buses) {
+		int Capacity = 0;
+		for(Bus bus:buses)
+		{
+			if(bus.getBusNo() == busno)
+				Capacity = bus.getcapacity();
+		}
+		int booked = 0;
+		for(Booking b:bookings)
+		{
+			if(b.busno == busno && b.date.equals(date) ) {
+				booked++;
+			}
+		}
+		return booked<Capacity?true:false;
+	}
+
+
+}
